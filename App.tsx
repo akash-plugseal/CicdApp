@@ -23,6 +23,14 @@ function App() {
   );
 }
 
+/* 
+  Stay Right Here 
+  Amore 
+  velvet hour 
+  
+
+*/
+
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
 
