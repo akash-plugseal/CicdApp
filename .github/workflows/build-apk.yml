@@ -1,0 +1,38 @@
+# .github/workflows/build-apk.yml
+name: Build APK
+
+on:
+  push:
+    branches:
+      - uat
+      - pre-prod
+      - prod
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build Android APK
+        uses: actions/upload-artifact@v4 
+        with: 
+          name: app-${{github.ref_name}}
+          path: android/app/build/outputs/apk/release/app-release.apk
