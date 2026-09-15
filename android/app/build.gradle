@@ -72,6 +72,7 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -94,12 +95,10 @@ android {
         }
 
         release {
-            if (project.hasProperty('CICD_APP_UPLOAD_STORE_FILE')) {
-                storeFile file(CICD_APP_UPLOAD_STORE_FILE)
-                storePassword CICD_APP_UPLOAD_STORE_PASSWORD
-                keyAlias CICD_APP_UPLOAD_KEY_ALIAS
-                keyPassword CICD_APP_UPLOAD_KEY_PASSWORD
-            }
+            storeFile file(project.findProperty("CICD_APP_UPLOAD_STORE_FILE"))
+            storePassword project.findProperty("CICD_APP_UPLOAD_STORE_PASSWORD")
+            keyAlias project.findProperty("CICD_APP_UPLOAD_KEY_ALIAS")
+            keyPassword project.findProperty("CICD_APP_UPLOAD_KEY_PASSWORD")
         }
     }
     buildTypes {
