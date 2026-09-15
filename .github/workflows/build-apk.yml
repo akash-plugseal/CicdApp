@@ -36,7 +36,8 @@ jobs:
 
       - name: Create Signing Properties
         run: |
-          echo "MYAPP_UPLOAD_STORE_FILE=cicdapp-release.jks" >> android/gradle.properties
+          echo "" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_STORE_FILE=${{ secrets.MYAPP_UPLOAD_STORE_FILE }}" >> android/gradle.properties
           echo "MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.CICD_APP_UPLOAD_KEY_ALIAS }}" >> android/gradle.properties
           echo "MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.CICD_APP_UPLOAD_STORE_PASSWORD }}" >> android/gradle.properties
           echo "MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.CICD_APP_UPLOAD_KEY_PASSWORD }}" >> android/gradle.properties
@@ -47,7 +48,7 @@ jobs:
 
       - name: Build Signed APK
         working-directory: android
-        run: ./gradlew clean assembleRelease
+        run: ./gradlew assembleRelease
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
